@@ -1,8 +1,8 @@
 package game
 
 import (
-	"awesomeProject/core"
-	"awesomeProject/engine"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"image/color"
@@ -11,11 +11,11 @@ import (
 )
 
 type Game struct {
-	context *engine.Context
-	camera  *Camera
-	world   *World
-	player  *Player
-	ui      *UI
+	context  *engine.Context
+	camera   *Camera
+	world    *World
+	player   *Player
+	ui       *UI
 	firstRun bool
 	textures map[TextureType]*ebiten.Image
 }
@@ -175,17 +175,17 @@ func (g *Game) init() {
 			powerCount--
 		} else {
 			gameObject := NewSolid(engine.NewBaseGameObject(g.context, rect))
-			gameObject.RenderObject = &engine.RenderObject{Texture:g.textures[TextureBrick]}
+			gameObject.RenderObject = &engine.RenderObject{Texture: g.textures[TextureBrick]}
 			g.world.AddChild(gameObject)
 		}
 	}
 }
 
 func (g *Game) firstRunInit() {
-	g.player.animations[PlayerAnimationIdle] = engine.NewAnimationWithSingleRenderObject(&engine.RenderObject{Texture:g.textures[TextureIdle]})
-	g.player.animations[PlayerAnimationJump] = engine.NewAnimationWithSingleRenderObject(&engine.RenderObject{Texture:g.textures[TextureJump]})
-	g.player.animations[PlayerAnimationCrouch] = engine.NewAnimationWithSingleRenderObject(&engine.RenderObject{Texture:g.textures[TextureCrouch]})
-	g.player.animations[PlayerAnimationCrouchMove] = engine.NewAnimationWithSingleRenderObject(&engine.RenderObject{Texture:g.textures[TextureCrouch]})
+	g.player.animations[PlayerAnimationIdle] = engine.NewAnimationWithSingleRenderObject(&engine.RenderObject{Texture: g.textures[TextureIdle]})
+	g.player.animations[PlayerAnimationJump] = engine.NewAnimationWithSingleRenderObject(&engine.RenderObject{Texture: g.textures[TextureJump]})
+	g.player.animations[PlayerAnimationCrouch] = engine.NewAnimationWithSingleRenderObject(&engine.RenderObject{Texture: g.textures[TextureCrouch]})
+	g.player.animations[PlayerAnimationCrouchMove] = engine.NewAnimationWithSingleRenderObject(&engine.RenderObject{Texture: g.textures[TextureCrouch]})
 	g.player.animations[PlayerAnimationMove] = engine.NewAnimationWithSpeedAndImage(
 		1000,
 		g.textures[TextureMove],

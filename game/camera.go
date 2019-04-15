@@ -1,8 +1,8 @@
 package game
 
 import (
-	"awesomeProject/core"
-	"awesomeProject/engine"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
 	"github.com/hajimehoshi/ebiten"
 )
 
@@ -11,10 +11,9 @@ type Camera struct {
 	originalSize core.Size
 }
 
-func NewCamera(baseGameObject*engine.BaseGameObject) *Camera {
+func NewCamera(baseGameObject *engine.BaseGameObject) *Camera {
 	return &Camera{BaseGameObject: *baseGameObject, originalSize: baseGameObject.Frame.Size.Div(2)}
 }
-
 
 func (w *Camera) HandleKeyboardInput() {
 	if ebiten.IsKeyPressed(ebiten.KeyZ) {

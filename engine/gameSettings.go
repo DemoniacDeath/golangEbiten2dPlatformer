@@ -1,9 +1,9 @@
 package engine
 
-import "awesomeProject/core"
+import "github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
 
 type Settings struct {
-	Title  string
+	Title      string
 	WindowSize core.Size
 }
 

@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"awesomeProject/core"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
 	"github.com/hajimehoshi/ebiten"
 )
 
@@ -41,16 +41,16 @@ type BaseGameObject struct {
 
 func NewBaseGameObject(context *Context, frame core.Rect) *BaseGameObject {
 	return &BaseGameObject{
-		Context: context,
-		Frame: frame,
-		visible: true,
-		removed: false,
+		Context:  context,
+		Frame:    frame,
+		visible:  true,
+		removed:  false,
 		children: map[GameObject]bool{},
 	}
 }
 
 func (o *BaseGameObject) HandleKeyboardInput() {
-	for child  := range o.children {
+	for child := range o.children {
 		child.HandleKeyboardInput()
 	}
 }
@@ -113,7 +113,7 @@ func (o *BaseGameObject) Render(screen *ebiten.Image, localBasis core.Vector, ca
 			o.Frame.Size,
 			cameraPosition,
 			cameraSize,
-			)
+		)
 	}
 
 	for child := range o.children {
@@ -129,14 +129,13 @@ func (o *BaseGameObject) GlobalPosition() core.Vector {
 	}
 }
 
-
 func (o *BaseGameObject) DetectCollisions() {
 	var allColliders []GameObject
 	o.collectColliders(&allColliders)
 
 	for i := range allColliders {
 		for j := range allColliders {
-			physics :=  allColliders[i].GetPhysics()
+			physics := allColliders[i].GetPhysics()
 			if physics != nil {
 				physics.DetectCollisions(allColliders[j].GetPhysics())
 			}

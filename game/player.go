@@ -1,8 +1,8 @@
 package game
 
 import (
-	"awesomeProject/core"
-	"awesomeProject/engine"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"math"
@@ -11,30 +11,30 @@ import (
 type PlayerAnimationType int
 
 const (
-	PlayerAnimationIdle PlayerAnimationType = iota
-	PlayerAnimationJump PlayerAnimationType = iota
-	PlayerAnimationCrouch PlayerAnimationType = iota
+	PlayerAnimationIdle       PlayerAnimationType = iota
+	PlayerAnimationJump       PlayerAnimationType = iota
+	PlayerAnimationCrouch     PlayerAnimationType = iota
 	PlayerAnimationCrouchMove PlayerAnimationType = iota
-	PlayerAnimationMove PlayerAnimationType = iota
+	PlayerAnimationMove       PlayerAnimationType = iota
 )
 
 type Player struct {
 	engine.BaseGameObject
-	speed  float64
-	jumpSpeed float64
-	power int
-	maxPower int
-	jumped bool
-	health int
-	dead bool
-	won bool
-	crouched bool
+	speed        float64
+	jumpSpeed    float64
+	power        int
+	maxPower     int
+	jumped       bool
+	health       int
+	dead         bool
+	won          bool
+	crouched     bool
 	originalSize core.Size
-	animations map[PlayerAnimationType]*engine.Animation
+	animations   map[PlayerAnimationType]*engine.Animation
 }
 
 func NewPlayer(baseGameObject *engine.BaseGameObject) *Player {
-	player := &Player{BaseGameObject: *baseGameObject, animations: map[PlayerAnimationType]*engine.Animation{} }
+	player := &Player{BaseGameObject: *baseGameObject, animations: map[PlayerAnimationType]*engine.Animation{}}
 	player.Physics = engine.NewPhysicsState(player)
 	player.GetPhysics().Gravity = true
 	player.GetPhysics().Still = false
@@ -66,7 +66,7 @@ func (p *Player) HandleKeyboardInput() {
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyUp) ||
 		ebiten.IsKeyPressed(ebiten.KeyW) ||
-		ebiten.IsKeyPressed(ebiten.KeySpace){
+		ebiten.IsKeyPressed(ebiten.KeySpace) {
 		if p.Physics == nil || !p.Physics.Gravity {
 			moveVector.Y -= p.speed
 		} else if !p.jumped {
@@ -118,12 +118,7 @@ func (p *Player) HandleKeyboardInput() {
 		p.Animation = p.animations[PlayerAnimationJump]
 	}
 
-
-
-
 	p.Frame.Center = p.Frame.Center.Plus(moveVector)
-
-
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyG) {
 		if p.Physics != nil {

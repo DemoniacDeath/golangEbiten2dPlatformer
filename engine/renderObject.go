@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"awesomeProject/core"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
 	"github.com/hajimehoshi/ebiten"
 	"image/color"
 	"log"
@@ -29,8 +29,8 @@ func (ro *RenderObject) Render(
 
 	geom := ebiten.GeoM{}
 	geom.Scale(
-		(windowSize.Width * (size.Width / cameraSize.Width)) / float64(textureWidth),
-		(windowSize.Height * (size.Height / cameraSize.Height)) / float64(textureHeight),
+		(windowSize.Width*(size.Width/cameraSize.Width))/float64(textureWidth),
+		(windowSize.Height*(size.Height/cameraSize.Height))/float64(textureHeight),
 	)
 	if ro.flipped {
 		geom.Scale(-1, 1)
@@ -40,8 +40,8 @@ func (ro *RenderObject) Render(
 		flipShift = size.Width
 	}
 	geom.Translate(
-		math.Round(windowSize.Width * ((renderPosition.X + flipShift ) / cameraSize.Width)),
-		math.Round(windowSize.Height * (renderPosition.Y / cameraSize.Height)),
+		math.Round(windowSize.Width*((renderPosition.X+flipShift)/cameraSize.Width)),
+		math.Round(windowSize.Height*(renderPosition.Y/cameraSize.Height)),
 	)
 
 	_ = screen.DrawImage(ro.Texture, &ebiten.DrawImageOptions{GeoM: geom})

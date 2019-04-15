@@ -1,8 +1,8 @@
 package game
 
 import (
-	"awesomeProject/core"
-	"awesomeProject/engine"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
 )
 
 type Frame struct {
@@ -21,7 +21,7 @@ func NewFrame(b *engine.BaseGameObject, width float64) *Frame {
 				b.Context,
 				core.NewRect(
 					0,
-					b.Frame.Size.Height / 2 - width / 2,
+					b.Frame.Size.Height/2-width/2,
 					b.Frame.Size.Width,
 					width,
 				),
@@ -31,10 +31,10 @@ func NewFrame(b *engine.BaseGameObject, width float64) *Frame {
 			engine.NewBaseGameObject(
 				b.Context,
 				core.NewRect(
-					-b.Frame.Size.Width/ 2 + width / 2,
+					-b.Frame.Size.Width/2+width/2,
 					0,
 					width,
-					b.Frame.Size.Height - width * 2,
+					b.Frame.Size.Height-width*2,
 				),
 			),
 		),
@@ -42,10 +42,10 @@ func NewFrame(b *engine.BaseGameObject, width float64) *Frame {
 			engine.NewBaseGameObject(
 				b.Context,
 				core.NewRect(
-					b.Frame.Size.Width/ 2 - width / 2,
+					b.Frame.Size.Width/2-width/2,
 					0,
 					width,
-					b.Frame.Size.Height - width * 2,
+					b.Frame.Size.Height-width*2,
 				),
 			),
 		),
@@ -54,7 +54,7 @@ func NewFrame(b *engine.BaseGameObject, width float64) *Frame {
 				b.Context,
 				core.NewRect(
 					0,
-					-b.Frame.Size.Height / 2 + width / 2,
+					-b.Frame.Size.Height/2+width/2,
 					b.Frame.Size.Width,
 					width,
 				),

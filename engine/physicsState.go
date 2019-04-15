@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"awesomeProject/core"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
 	"math"
 )
 
@@ -34,15 +34,19 @@ func (p *PhysicsState) Change() {
 }
 
 func (p *PhysicsState) DetectCollisions(c *PhysicsState) {
-	if c == nil { return }
-	if p.Still && c.Still { return }
+	if c == nil {
+		return
+	}
+	if p.Still && c.Still {
+		return
+	}
 
-	x1 := p.gameObject.GlobalPosition().X - p.gameObject.GetFrame().Size.Width / 2
-	x2 := c.gameObject.GlobalPosition().X - c.gameObject.GetFrame().Size.Width / 2
+	x1 := p.gameObject.GlobalPosition().X - p.gameObject.GetFrame().Size.Width/2
+	x2 := c.gameObject.GlobalPosition().X - c.gameObject.GetFrame().Size.Width/2
 	X1 := x1 + p.gameObject.GetFrame().Size.Width
 	X2 := x2 + c.gameObject.GetFrame().Size.Width
-	y1 := p.gameObject.GlobalPosition().Y - p.gameObject.GetFrame().Size.Height / 2
-	y2 := c.gameObject.GlobalPosition().Y - c.gameObject.GetFrame().Size.Height / 2
+	y1 := p.gameObject.GlobalPosition().Y - p.gameObject.GetFrame().Size.Height/2
+	y2 := c.gameObject.GlobalPosition().Y - c.gameObject.GetFrame().Size.Height/2
 	Y1 := y1 + p.gameObject.GetFrame().Size.Height
 	Y2 := y2 + c.gameObject.GetFrame().Size.Height
 
@@ -54,9 +58,9 @@ func (p *PhysicsState) DetectCollisions(c *PhysicsState) {
 	alreadyCollided := p.Colliders[c.gameObject] || c.Colliders[p.gameObject]
 
 	if dX1 > 0 &&
-			dX2 < 0 &&
-			dY1 > 0 &&
-			dY2 < 0	{
+		dX2 < 0 &&
+		dY1 > 0 &&
+		dY2 < 0 {
 		overlapX := dX2
 		if math.Abs(dX1) < math.Abs(dX2) {
 			overlapX = dX1

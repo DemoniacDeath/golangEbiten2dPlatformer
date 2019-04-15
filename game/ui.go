@@ -1,11 +1,9 @@
 package game
 
 import (
-	"awesomeProject/engine"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
 )
 
 type UI struct {
 	engine.BaseGameObject
 }
-
-

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"awesomeProject/core"
-	"awesomeProject/engine"
-	"awesomeProject/game"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
+	"github.com/DemoniacDeath/golangEbiten2dPlatformer/game"
 	"log"
 )
 
