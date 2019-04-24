@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
+	"../core"
 	"github.com/hajimehoshi/ebiten"
 	"image/color"
 	"log"

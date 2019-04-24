@@ -1,6 +1,6 @@
 package engine
 
-import "github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
+import "../core"
 
 type Collision struct {
 	Collider        GameObject

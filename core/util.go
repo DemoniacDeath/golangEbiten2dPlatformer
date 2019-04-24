@@ -15,5 +15,5 @@ func Srand() {
 }
 
 func Rand(min int, max int) int {
-	return rand.Intn(max - min) + min
+	return rand.Intn(max-min) + min
 }

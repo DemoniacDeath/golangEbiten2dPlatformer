@@ -1,13 +1,17 @@
 package game
 
 import (
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
-	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/golang/freetype/truetype"
 	"image/color"
+	"io/ioutil"
+	"log"
 	"os"
 	"time"
+
+	"../core"
+	"../engine"
+	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 type Game struct {
@@ -15,7 +19,7 @@ type Game struct {
 	camera   *Camera
 	world    *World
 	player   *Player
-	ui       *UI
+	ui       *engine.BaseGameObject
 	firstRun bool
 	textures map[TextureType]*ebiten.Image
 }
@@ -78,6 +82,13 @@ func (g *Game) init() {
 			),
 		),
 	}
+
+	g.ui = engine.NewBaseGameObject(g.context, core.NewRect(
+		0,
+		0,
+		float64(g.context.Settings.WindowSize.Width/4),
+		float64(g.context.Settings.WindowSize.Height/4),
+	))
 
 	g.camera = NewCamera(
 		engine.NewBaseGameObject(
@@ -179,6 +190,71 @@ func (g *Game) init() {
 			g.world.AddChild(gameObject)
 		}
 	}
+
+	var healthBarHolder = engine.NewBaseGameObject(g.context, core.NewRect(-g.world.Frame.Size.Width/4+16, -g.world.Frame.Size.Height/4+2.5, 30, 3))
+	healthBarHolder.RenderObject = engine.NewRenderObjectFromColor(color.Black, 1)
+	g.ui.AddChild(healthBarHolder)
+	var powerBarHolder = engine.NewBaseGameObject(g.context, core.NewRect(g.world.Frame.Size.Width/4-16, -g.world.Frame.Size.Height/4+2.5, 30, 3))
+	powerBarHolder.RenderObject = engine.NewRenderObjectFromColor(color.Black, 1)
+	g.ui.AddChild(powerBarHolder)
+
+	g.player.healthBar = NewUIBar(engine.NewBaseGameObject(g.context, core.Rect{core.Vector{}, core.Size{29, 2}}))
+	g.player.healthBar.RenderObject = engine.NewRenderObjectFromColor(color.RGBA{R: 0xff, A: 0xff}, 1)
+	healthBarHolder.AddChild(g.player.healthBar)
+	g.player.healthBar.SetValue(100)
+	g.player.powerBar = NewUIBar(engine.NewBaseGameObject(g.context, core.Rect{core.Vector{}, core.Size{29, 2}}))
+	g.player.powerBar.RenderObject = engine.NewRenderObjectFromColor(color.RGBA{G: 0xff, A: 0xff}, 1)
+	powerBarHolder.AddChild(g.player.powerBar)
+	g.player.powerBar.SetValue(0)
+
+	font, err := ioutil.ReadFile("game/fonts/Scratch_.ttf")
+	if err != nil {
+		log.Fatal(err)
+	}
+	tt, err := truetype.Parse(font)
+	if err != nil {
+		log.Fatal(err)
+	}
+	face := truetype.NewFace(tt, &truetype.Options{
+		Size: 40,
+		DPI:  72,
+	})
+
+	g.player.winText = NewUITextWith(
+		engine.NewBaseGameObject(
+			g.context,
+			core.Rect{
+				core.Vector{},
+				core.Size{
+					100,
+					20,
+				},
+			},
+		),
+		"Congratulations! You won!",
+		face,
+		color.RGBA{G: 0xff, A: 0xff},
+	)
+	g.player.winText.SetVisible(false)
+	g.ui.AddChild(g.player.winText)
+
+	g.player.deathText = NewUITextWith(
+		engine.NewBaseGameObject(
+			g.context,
+			core.Rect{
+				core.Vector{},
+				core.Size{
+					100,
+					20,
+				},
+			},
+		),
+		"You died! Game Over!",
+		face,
+		color.RGBA{R: 0xff, A: 0xff},
+	)
+	g.player.deathText.SetVisible(false)
+	g.ui.AddChild(g.player.deathText)
 }
 
 func (g *Game) firstRunInit() {
@@ -223,7 +299,7 @@ func (g *Game) update(screen *ebiten.Image) error {
 
 	g.world.Render(screen, g.world.Frame.Center, g.camera.GlobalPosition(), g.camera.Frame.Size)
 
-	//TODO: render UI
+	g.ui.Render(screen, g.ui.Frame.Center, core.Vector{}, g.camera.originalSize)
 
 	if g.firstRun {
 		g.firstRun = false

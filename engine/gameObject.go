@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
+	"../core"
 	"github.com/hajimehoshi/ebiten"
 )
 
@@ -25,6 +25,7 @@ type GameObject interface {
 	GetFrame() core.Rect
 	Remove()
 	DealDamage(damage int)
+	SetVisible(bool)
 }
 
 type BaseGameObject struct {
@@ -56,9 +57,9 @@ func (o *BaseGameObject) HandleKeyboardInput() {
 }
 
 func (o *BaseGameObject) HandleEnterCollision(collision Collision) {}
+func (o *BaseGameObject) HandleCollision(collision Collision)      {}
+func (o *BaseGameObject) HandleExitCollision(collider GameObject)  {}
 
-func (o *BaseGameObject) HandleCollision(collision Collision)     {}
-func (o *BaseGameObject) HandleExitCollision(collider GameObject) {}
 func (o *BaseGameObject) Animate(now int64) {
 	if o.Animation != nil {
 		o.RenderObject = o.Animation.Animate(now)
@@ -170,3 +171,7 @@ func (o *BaseGameObject) Remove() {
 }
 
 func (o *BaseGameObject) DealDamage(damage int) {}
+
+func (o *BaseGameObject) SetVisible(v bool) {
+	o.visible = v
+}

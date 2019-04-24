@@ -1,8 +1,9 @@
 package engine
 
 import (
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
 	"math"
+
+	"../core"
 )
 
 type PhysicsState struct {

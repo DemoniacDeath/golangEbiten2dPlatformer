@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/game"
 	"log"
+
+	"./core"
+	"./engine"
+	"./game"
 )
 
 func main() {

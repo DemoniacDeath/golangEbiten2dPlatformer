@@ -1,6 +1,6 @@
 package game
 
-import "github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
+import "../engine"
 
 type Consumable struct {
 	engine.BaseGameObject

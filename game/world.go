@@ -1,7 +1,7 @@
 package game
 
 import (
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
+	"../engine"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/inpututil"
 )

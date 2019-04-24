@@ -1,8 +1,8 @@
 package game
 
 import (
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/core"
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
+	"../core"
+	"../engine"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"math"
@@ -31,6 +31,10 @@ type Player struct {
 	crouched     bool
 	originalSize core.Size
 	animations   map[PlayerAnimationType]*engine.Animation
+	healthBar    *UIBar
+	powerBar     *UIBar
+	winText      *UIText
+	deathText    *UIText
 }
 
 func NewPlayer(baseGameObject *engine.BaseGameObject) *Player {
@@ -137,6 +141,7 @@ func (p *Player) HandleEnterCollision(collision engine.Collision) {
 	switch collision.Collider.(type) {
 	case *Consumable:
 		p.power += 1
+		p.powerBar.SetValue(p.power)
 		collision.Collider.Remove()
 		p.speed += 0.01
 		p.jumpSpeed += 0.01
@@ -155,7 +160,9 @@ func (p *Player) HandleExitCollision(collider engine.GameObject) {
 func (p *Player) HandleCollision(collision engine.Collision) {
 	if math.Abs(collision.CollisionVector.X) > math.Abs(collision.CollisionVector.Y) {
 		if collision.CollisionVector.Y > 0 && p.jumped && p.Physics != nil && p.Physics.Gravity {
-			p.jumped = false
+			if core.IsInstanceOf(collision.Collider, &Solid{}) {
+				p.jumped = false
+			}
 		}
 	}
 }
@@ -163,6 +170,7 @@ func (p *Player) HandleCollision(collision engine.Collision) {
 func (p *Player) DealDamage(damage int) {
 	if !p.won {
 		p.health -= damage
+		p.healthBar.SetValue(p.health)
 		if p.health < 0 {
 			p.Die()
 		}
@@ -170,9 +178,11 @@ func (p *Player) DealDamage(damage int) {
 }
 
 func (p *Player) Die() {
+	p.deathText.SetVisible(true)
 	p.dead = true
 }
 
 func (p *Player) Win() {
+	p.winText.SetVisible(true)
 	p.won = true
 }

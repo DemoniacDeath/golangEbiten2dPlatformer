@@ -1,8 +1,9 @@
 package game
 
 import (
-	"github.com/DemoniacDeath/golangEbiten2dPlatformer/engine"
 	"math"
+
+	"../engine"
 )
 
 type Solid struct {
